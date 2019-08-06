@@ -39,13 +39,13 @@
   <tr>
     <td>
       <center><br>
-      % if nums['base']:
-      % for num in nums['base']:
+      % if base:
+      % for num in base:
         <img src="static/w{{!num}}.png">
       % end
       % end
-      % if nums['exn']:
-        <img src="static/r{{!nums['exn']}}.png">
+      % if exn:
+        <img src="static/r{{!exn}}.png">
       % end
       </center>
       <br>
@@ -54,7 +54,7 @@
  </table>
 </form>
 % import time
-% if nums['base']:
+% if base:
 % randquery = time.time()
 <br>
 <center><img src='static/qrcode.png?{{randquery}}'></center>
