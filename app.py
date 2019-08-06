@@ -21,8 +21,27 @@ class Lotto:
                       'lotto_texas': 'Lotto Texas',
                       'mega_millions': 'Mega Millions',
                       'power_ball': 'Power Ball'}
+        self.two_step = {'pool': 35,
+                         'amount': 4,
+                         'exn_pool': 35,
+                         'game_code': 'WSD1S'}
+        self.lotto_texas = {'pool': 54,
+                            'amount': 6,
+                            'exn_pool': False,
+                            'game_code': 'WLD1JCMNS'}
+        self.mega_millions = {'pool': 70,
+                              'amount': 5,
+                              'exn_pool': 25,
+                              'game_code': 'WMD1JCMNS'}
+        self.power_ball = {'pool': 69,
+                           'amount': 5,
+                           'exn_pool': 26,
+                           'game_code': 'WPD1JCMNS'}
 
     def get_num(pool):
+        if not pool:
+            return False
+
         num = str(randint(1, pool))
 
         if len(num) == 1:
@@ -30,57 +49,54 @@ class Lotto:
 
         return num
 
-    def get_base_nums(self, pool, amount):
+    def get_exn(self, game_type):
+
+        return self.get_num(self.game_type['exn_pool'])
+
+    def get_base_nums(self, game_type):
         base_nums = []
 
-        while len(base_nums) < amount:
-            temp = self.get_num(pool)
+        while len(base_nums) < self.game_type['amount']:
+            temp = self.get_num(self.game_type['pool'])
 
             if temp not in base_nums:
                 base_nums.append(temp)
 
         return sorted(base_nums)
 
-    @app.route('/')
-    def index(self):
+    def get_game_code(self, game_type):
 
-        return template('index', version=VER, selected='',
-                        games=self.games, base=False, exn=False)
+        return self.game_type['game_code']
 
-    @app.route('/', method=['POST'])
-    def give_nums(self):
-        game_type = str(request.forms.get('game_type'))
 
-        if game_type == 'lotto_texas':
-            base = self.get_base_nums(54, 6)
-            exn = False
-            game_code = 'WLD1JCMNS'
+lotto = Lotto()
 
-        elif game_type == 'power_ball':
-            base = self.get_base_nums(69, 5)
-            exn = self.get_num(26)
-            game_code = 'WPD1JCMNS'
 
-        elif game_type == 'mega_millions':
-            base = self.get_base_nums(70, 5)
-            exn = self.get_num(25)
-            game_code = 'WMD1JCMNS'
+@app.route('/')
+def index():
 
-        elif game_type == 'two_step':
-            base = self.get_base_nums(35, 4)
-            exn = self.get_num(35)
-            game_code = 'WSD1S'
+    return template('index', version=VER, selected='',
+                    games=lotto.games, base=False, exn=False)
 
-        qrnums = 'LOT21:{}{}'.format(game_code, ''.join(base))
 
-        if exn:
-            qrnums += exn
+@app.route('/', method=['POST'])
+def give_nums():
+    game_type = str(request.forms.get('game_type'))
 
-        qr = create(qrnums)
-        qr.png('{}/qrcode.png'.format(path.join(dir_path, 'static')), scale=6)
+    base = lotto.get_base_nums(game_type)
+    exn = lotto.get_num(game_type)
+    game_code = lotto.get_game_code(game_type)
 
-        return template('index', version=VER, selected=game_type,
-                        games=self.games, base=base, exn=exn)
+    qrnums = 'LOT21:{}{}'.format(game_code, ''.join(base))
+
+    if exn:
+        qrnums += exn
+
+    qr = create(qrnums)
+    qr.png('{}/qrcode.png'.format(path.join(dir_path, 'static')), scale=6)
+
+    return template('index', version=VER, selected=game_type,
+                    games=lotto.games, base=base, exn=exn)
 
 
 if __name__ == '__main__':
