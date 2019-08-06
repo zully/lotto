@@ -53,9 +53,9 @@
   </tr>
  </table>
 </form>
-% import time
+% from time import time
 % if base:
-% randquery = time.time()
+% randquery = time()
 <br>
 <center><img src='static/qrcode.png?{{randquery}}'></center>
 % end

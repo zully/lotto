@@ -7,6 +7,7 @@ from time import time
 class Lotto:
 
     def __init__(self, game_type):
+        seed(25695975 + time())
         self.game_type = game_type
         self.games = {'two_step': 'Texas Two Step',
                       'lotto_texas': 'Lotto Texas',
@@ -35,8 +36,6 @@ class Lotto:
                                 'game_code': 'WPD1JCMNS'}
         else:
             self.game_config = None
-
-        seed(time())
 
     def get_num(self, exn=False):
         pool = self.game_config['pool']
