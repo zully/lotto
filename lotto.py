@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
-from random import randint
+from random import (randint, seed)
+from time import time
 
 
 class Lotto:
@@ -35,9 +36,11 @@ class Lotto:
         else:
             self.game_config = None
 
+        seed(time())
+
     def get_num(self, exn=False):
         pool = self.game_config['pool']
-        
+
         if exn:
             pool = self.game_config['exn_pool']
 
