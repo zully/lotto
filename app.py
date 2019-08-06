@@ -46,7 +46,7 @@ class Lotto:
         else:
             self.game_config = None
 
-    def get_num(pool):
+    def get_num(self, pool):
         num = str(randint(1, pool))
 
         if len(num) == 1:
