@@ -35,7 +35,12 @@ class Lotto:
         else:
             self.game_config = None
 
-    def get_num(self, pool):
+    def get_num(self, exn=False):
+        pool = self.game_config['pool']
+        
+        if exn:
+            pool = self.game_config['exn_pool']
+
         num = str(randint(1, pool))
 
         if len(num) == 1:
@@ -47,13 +52,13 @@ class Lotto:
         if not self.game_config['exn_pool']:
             return ''
 
-        return self.get_num(self.game_config['exn_pool'])
+        return self.get_num(True)
 
     def get_base_nums(self):
         base_nums = []
 
         while len(base_nums) < self.game_config['amount']:
-            temp = self.get_num(self.game_config['pool'])
+            temp = self.get_num()
 
             if temp not in base_nums:
                 base_nums.append(temp)
