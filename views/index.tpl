@@ -44,7 +44,7 @@
         <img src="static/w{{!num}}.png">
       % end
       % end
-      % if exn:
+      % if exn is not '':
         <img src="static/r{{!exn}}.png">
       % end
       </center>

@@ -16,7 +16,7 @@ app = Bottle(__name__)
 def index():
     lotto = Lotto(None)
     return template('index', version=VER, selected='',
-                    games=lotto.games, base=False, exn=False)
+                    games=lotto.games, base=False, exn='')
 
 
 @app.route('/', method=['POST'])
@@ -26,10 +26,7 @@ def results():
 
     base = lotto.get_base_nums()
     exn = lotto.get_exn()
-    qrnums = 'LOT21:{}{}'.format(lotto.get_game_code(), ''.join(base))
-
-    if exn:
-        qrnums += exn
+    qrnums = lotto.get_game_code() + ''.join(base) + exn
 
     qr = create(qrnums)
     qr.png('{}/qrcode.png'.format(path.join(dir_path, 'static')), scale=6)

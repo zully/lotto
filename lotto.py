@@ -45,7 +45,7 @@ class Lotto:
 
     def get_exn(self):
         if not self.game_config['exn_pool']:
-            return False
+            return ''
 
         return self.get_num(self.game_config['exn_pool'])
 
@@ -62,4 +62,4 @@ class Lotto:
 
     def get_game_code(self):
 
-        return self.game_config['game_code']
+        return 'LOT21:{}'.format(self.game_config['game_code'])
