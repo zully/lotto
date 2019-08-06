@@ -15,6 +15,7 @@ TEMPLATE_PATH.insert(0, views_path)
 
 app = Bottle(__name__)
 
+
 def get_num(pool):
     num = str(randint(1, pool))
 
@@ -91,4 +92,3 @@ def give_nums():
 
 if __name__ == '__main__':
     app.run()
-
