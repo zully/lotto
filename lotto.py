@@ -7,12 +7,14 @@ from time import time
 class Lotto:
 
     def __init__(self, game_type):
-        seed(25695975 + time())
+
         self.game_type = game_type
-        self.games = {'two_step': 'Texas Two Step',
-                      'lotto_texas': 'Lotto Texas',
-                      'mega_millions': 'Mega Millions',
-                      'power_ball': 'Power Ball'}
+        self.games = {
+            'two_step': 'Texas Two Step',
+            'lotto_texas': 'Lotto Texas',
+            'mega_millions': 'Mega Millions',
+            'power_ball': 'Power Ball'
+        }
 
         if game_type == 'two_step':
             self.game_config = {'pool': 35,
@@ -43,6 +45,7 @@ class Lotto:
         if exn:
             pool = self.game_config['exn_pool']
 
+        seed(25695975 + time())
         num = str(randint(1, pool))
 
         if len(num) == 1:
