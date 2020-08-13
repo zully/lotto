@@ -45,7 +45,7 @@ class Lotto:
         if exn:
             pool = self.game_config['exn_pool']
 
-        seeds = [4241980, 11171979, 10282016, 10171943]
+        seeds = [19800424, 19791117, 20161028, 19431007]
         seed(choice(seeds) + time())
         num = str(randint(1, pool))
 

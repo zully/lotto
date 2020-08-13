@@ -5,7 +5,7 @@ from pyqrcode import create
 from os import path
 from lotto import Lotto
 
-VER = '2.3.3'
+VER = '2.3.4'
 dir_path = path.dirname(path.realpath(__file__))
 TEMPLATE_PATH.insert(0, path.join(dir_path, 'views'))
 
