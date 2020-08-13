@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from random import (randint, seed)
+from random import (randint, seed, choice)
 from time import time
 
 
@@ -45,7 +45,8 @@ class Lotto:
         if exn:
             pool = self.game_config['exn_pool']
 
-        seed(111719790424198010282016 + time())
+        seeds = [4241980, 11171979, 10282016, 10171943]
+        seed(choice(seeds) + time())
         num = str(randint(1, pool))
 
         if len(num) == 1:
